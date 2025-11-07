@@ -1,0 +1,32 @@
+from openpyxl import Workbook, load_workbook
+from datetime import datetime 
+import os 
+
+arquivo = "financeiro.xlsx"
+
+if os.path.exists(arquivo):
+    wb = load_workbook(arquivo)
+    ws = wb.active
+else:
+    wb = Workbook()
+    ws = wb.active
+    ws.append(["Data", "Descrição", "Categoria", "Tipo", "Valor (R$)"])
+
+print("=== DASHBOARD FINANCEIRO PESSOAL ===")
+
+while True:
+    data = input("Data (dd/mm/aaaa)")
+    descricao = input("Descrição: ")
+    categoria = input("Categoria: ")
+    tipo = input("Tipo (Entrada/Saída)").capitalize()
+    valor = float(input("Valor (R$): "))
+
+    ws.append([data, descricao, tipo, categoria, valor])
+    wb.save(arquivo)
+
+    print("Registro adicionado com Sucesso!")
+
+    continuar = input("Deseja adicionar outro registro? (s/n): ").lower()
+    if continuar !="s":
+        print("Dados salvos em 'financeiro.xlsx'")
+        break
